@@ -14,11 +14,12 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
     private final Gate gate;
     private final JCheckBox Entrada;
     private final JCheckBox Saida;
-
     private final JCheckBox Entrada2;
+    private final Switch A = new Switch();
+    private final Switch B = new Switch();
 
     public GateView(Gate gate) {
-        super(245, 346);
+        super();
 
         this.gate = gate;
 
@@ -75,8 +76,7 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
 
     private void update() {
         if (gate.getInputSize() > 1) {
-            Switch A = new Switch();
-            Switch B = new Switch();
+
             try {
                 Object PinoA = Entrada.getSelectedObjects();
                 if (PinoA == null) {
@@ -109,7 +109,6 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
                 Saida.setEnabled(false);
             }
         } else {
-            Switch A = new Switch();
             try {
                 Object PinoA = Entrada.getSelectedObjects();
                 if (PinoA == null) {
