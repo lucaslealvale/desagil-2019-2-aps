@@ -91,7 +91,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         int y = e.getY();
         Color colorTmp;
         if (gate.read()) {
-            double r = 12;
+
 
             double dist = Math.sqrt(Math.pow(222 - x, 2) + (Math.pow(57 - y, 2)));
 
