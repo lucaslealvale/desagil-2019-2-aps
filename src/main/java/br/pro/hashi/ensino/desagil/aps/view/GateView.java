@@ -18,13 +18,16 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
 
     private final JCheckBox[] inputBoxes;
     private final Image image;
-    private Light light;
-    private  Color color;
+    private final Light light;
+    private final int r;
+    private Color color;
 
     public GateView(Gate gate) {
         super(245, 150);
         this.gate = gate;
+        this.r = 12;
         this.light = new Light();
+        light.setR(255);
 
         int inputSize = gate.getInputSize();
         light.connect(0, gate);
@@ -68,16 +71,12 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
                 switches[i].turnOff();
             }
         }
-        boolean result = gate.read();
-        if (result) {
-            light.setR(255);
-        } else {
-            light.setR(0);
-        }
+
         int r = light.getR();
         int g = light.getG();
         int b = light.getB();
-        color = new Color(r,g,b);
+        color = new Color(r, g, b);
+
         repaint();
     }
 
@@ -92,7 +91,11 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
         int y = e.getY();
         Color colorTmp;
         if (gate.read()) {
-            if (x > 210 && x < 235 && y > 45 && y < 70) {
+            double r = 12;
+
+            double dist = Math.sqrt(Math.pow(222 - x, 2) + (Math.pow(57 - y, 2)));
+
+            if (r > dist) {
                 colorTmp = JColorChooser.showDialog(this, null, color);
                 try {
                     light.setR(colorTmp.getRed());
@@ -108,6 +111,7 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
 
         }
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -131,8 +135,9 @@ public class GateView extends FixedPanel implements ItemListener, MouseListener 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 25, 0, 175, 110, this);
+
         g.setColor(color);
-        g.fillRoundRect(210, 45, 25, 25, 25, 25);
+        g.fillRoundRect(222 - r, 57 - r, 2 * r, 2 * r, 2 * r, 2 * r);
         getToolkit().sync();
     }
 }
